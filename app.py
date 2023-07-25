@@ -254,6 +254,8 @@ def build_weather_div(weather_figs):
 
 app = Dash(__name__,suppress_callback_exceptions=True)
 
+server = app.server
+
 app.layout = html.Div(
     [
      # header 
@@ -511,10 +513,5 @@ def new_verification(ref_sn, n_clicks_outages, rsd_sn, rsd_outages, ref_outages)
     
     return ws_corr_tabs, ws_binned_table, ava_table, num_datapoints_table, timeline_ws, rsd_total_outages, ref_total_outages, n_clicks_outages
     
-    
-    
-
-
-
 if __name__ == "__main__":
     app.run_server(debug=True)
