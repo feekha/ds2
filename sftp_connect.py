@@ -17,25 +17,35 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
     print(wdir)
     filenames_dict = {}
     print(sftp.listdir(wdir))
+
+    i = 1
     for loc in sftp.listdir(wdir):
         # mast data
         filenames_mast = sftp.listdir(wdir + "/" + loc + "/Mast")
-        print('filenames_mast' , filenames_mast)
+        print(i , 'loc' , loc ,  'filenames_mast' , filenames_mast)
         extensions = [x.rsplit(".")[-1] for x in filenames_mast]
-        print('extensions' , extensions)
+        print(i , 'loc' , loc , 'extensions' , extensions)
         for k in range(0,len(type_list)):
             if type_list[k] in extensions:
                 files=[x for x in filenames_mast if x.endswith("."+type_list[k])]
                 filenames_dict[wdir + "/" + loc + "/Mast"] = files
                 break
 
-        print(filenames_dict)
+        print(i , filenames_dict)
 
         # rsd data
         ip_folders = sftp.listdir(wdir + "/" + loc + "/RSD")
+
+        print(i , 'ip_folder' , ip_folders)
         for folder in ip_folders:
             filenames = sftp.listdir(wdir + "/" + loc + "/RSD/" + folder)
+
+            print(i , 'folder' , folder , 'filenames' , filenames)
+
             folder_dir = wdir + "/" + loc + "/RSD/" + folder
+
+            print(i , 'folder' , folder , 'folder_dir' , folder_dir)
+
             if "STA" in filenames:
                 filenames = sftp.listdir(wdir + "/" + loc + "/RSD/" + folder + "/STA")
                 folder_dir = wdir + "/" + loc + "/RSD/" + folder + "/STA"
@@ -45,6 +55,8 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
                     files=[x for x in filenames if x.endswith("."+type_list[k]) & sftp.isfile(folder_dir + '/' + x)] # this for loop will need some time, because sftp.isfile needs 0.03s
                     filenames_dict[folder_dir] = files
                     break
+
+        i = i + 1
 
     print(filenames_dict)
     return filenames_dict
