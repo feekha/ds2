@@ -48,12 +48,27 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
 
             if "STA" in filenames:
                 filenames = sftp.listdir(wdir + "/" + loc + "/RSD/" + folder + "/STA")
+
+                print(i , 'folder' , folder , 'filename' , filenames)
+
                 folder_dir = wdir + "/" + loc + "/RSD/" + folder + "/STA"
+
+                print(i , 'folder' , folder , 'folder_dir' , folder_dir)
+
             extensions = [x.rsplit(".")[-1] for x in filenames] 
+
+            print(i , 'folder' , folder , 'extension' , extensions)
+
             for k in range(0,len(type_list)):
                 if type_list[k] in extensions:
                     files=[x for x in filenames if x.endswith("."+type_list[k]) & sftp.isfile(folder_dir + '/' + x)] # this for loop will need some time, because sftp.isfile needs 0.03s
+                    
+                    print(i , 'folder' , folder , 'files' , files)
+
                     filenames_dict[folder_dir] = files
+
+                    print(i , 'folder' , folder , 'filenames_dict' , filenames_dict)
+
                     break
 
         i = i + 1
