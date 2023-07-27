@@ -16,6 +16,7 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
     wdir = sftp.pwd
     print(wdir)
     filenames_dict = {}
+    print(sftp.listdir(wdir))
     for loc in sftp.listdir(wdir):
         # mast data
         filenames_mast = sftp.listdir(wdir + "/" + loc + "/Mast")
