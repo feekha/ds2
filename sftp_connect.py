@@ -60,7 +60,13 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
             print(i , 'folder' , folder , 'extension' , extensions)
 
             for k in range(0,len(type_list)):
+
+                print('k' , k , 'type_list' , type_list)
+
                 if type_list[k] in extensions:
+
+                    print('yes')
+
                     files=[x for x in filenames if x.endswith("."+type_list[k]) & sftp.isfile(folder_dir + '/' + x)] # this for loop will need some time, because sftp.isfile needs 0.03s
                     
                     print(i , 'folder' , folder , 'files' , files)
