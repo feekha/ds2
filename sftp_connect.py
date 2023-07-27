@@ -20,12 +20,17 @@ def get_filenames_dict(sftp, type_list: List[str]=["sta","csv","dat"]):
     for loc in sftp.listdir(wdir):
         # mast data
         filenames_mast = sftp.listdir(wdir + "/" + loc + "/Mast")
+        print('filenames_mast' , filenames_mast)
         extensions = [x.rsplit(".")[-1] for x in filenames_mast]
+        print('extensions' , extensions)
         for k in range(0,len(type_list)):
             if type_list[k] in extensions:
                 files=[x for x in filenames_mast if x.endswith("."+type_list[k])]
                 filenames_dict[wdir + "/" + loc + "/Mast"] = files
                 break
+
+        print(filenames_dict)
+
         # rsd data
         ip_folders = sftp.listdir(wdir + "/" + loc + "/RSD")
         for folder in ip_folders:
